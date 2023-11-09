@@ -11,8 +11,7 @@ class Solution {
             if (s.charAt(i) == 'Y' || s.charAt(i) == 'y') {
                 yCount++;
             }
-        }
-        answer = (pCount == yCount) ? true : false;        
-        return answer;
+        }              
+        return pCount == yCount;
     }
 }
