@@ -14,15 +14,14 @@ public class Main {
             n = Integer.parseInt(st.nextToken());
             String s = st.nextToken();
 
-            String[] arr = s.split("");
-            for (int j = 0; j < arr.length; j++) {
+            for (int j = 0; j < s.length(); j++) {
                 for (int k = 0; k < n; k++) {
-                    bw.write(arr[j]);
+                    bw.write(s.charAt(j));
                 }
             }
             bw.newLine();
         }
-        
+
         br.close();
         bw.flush();
         bw.close();
