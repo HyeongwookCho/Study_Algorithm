@@ -1,6 +1,5 @@
 import java.io.*;
-import java.util.Arrays;
-import java.util.HashSet;
+import java.util.HashMap;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -8,44 +7,40 @@ public class Main {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
         String str = br.readLine().toUpperCase();
-        // 많이 사용된 알파벳을 체크하기 위해 중복성 제거
-        HashSet<Character> arr = new HashSet<Character>();
-        // 각 경우마다 사용된 수를 기록하기 위한 배열
-        int[] checkedNumList = new int[arr.size()];
+        br.close();
+        HashMap<Character, Integer> alphaList = new HashMap<Character, Integer>();
 
-
-        for (int i = 0; i < str.length(); i++) {
-            arr.add(str.charAt(i));
+        for (int i = 0; i < 26; i++) {
+            alphaList.put((char)(65+i), 0);
         }
-        // set으로 선언되었기에 index 값을 알기 위해 Character[] 로 변환
-        Character[] checklist = arr.toArray(new Character[0]);
+        for (int j = 0; j < str.length(); j++) {
+            char c = str.charAt(j);
+            if(alphaList.containsKey(c)) {
+                alphaList.put(c, alphaList.get(c) + 1);
+            }
+        }
 
-        // 각 케이스와 str 이 일치하는 지 check and count
+        char maxChar = '?';
         int maxCount = 0;
-        int maxIndex = 0;
-        for (int j = 0; j < checklist.length; j++) {
-            int count = 0;
-            for (int k = 0; k < str.length(); k++) {
-                if(checklist[j] == str.charAt(k)){
-                    count++;
-                }
-            }
-            if (count > maxCount) {
-                maxCount = count;
-                maxIndex = j;
-            } else if (count == maxCount) {
-                maxIndex = -1;  // 동일한 횟수로 가장 많이 등장하는 문자가 여러 개 있는 경우
+        boolean isDuplicate = false;
+
+        for (Character key : alphaList.keySet()) {
+            int value = alphaList.get(key);
+            if (value > maxCount) {
+                maxCount = value;
+                maxChar = key;
+                isDuplicate = false;
+            } else if (value == maxCount) {
+                isDuplicate = true;
             }
         }
 
-        if (maxIndex == -1) {
-            System.out.println("?");
+        if (isDuplicate) {
+            bw.write('?');
         } else {
-            System.out.println(checklist[maxIndex]);
+            bw.write(maxChar);
         }
-        
         bw.flush();
         bw.close();
     }
-
 }
