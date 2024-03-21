@@ -18,8 +18,12 @@ public class Main {
         int result = 0;
 
         // 최적화된 시작점 찾기
-        // N의 자리수 * 9만큼 빼주는 것으로 안전한 출발점 결정하기 (사실 미미함 ^^)
-        int start = Math.max(N - 9 * String.valueOf(N).length(), 0); 
+        // N의 자리수 * 9만큼 빼주는 것으로 안전한 출발점 결정하기 (216 일 때는 189부터 출발)
+        // ==> 3자리 일 때 최대 9,9,9가 들어올 수 있는데 그럼 찾고자 하는 M(result)는 216 으로부터 최대 27 차이가 난다. 그래서 189부터 출발한다.
+        // 1자리 일때는 무조건 0이니 노상관~
+        // 성능 개선!
+        
+        int start = Math.max(N - 9 * String.valueOf(N).length(), 0);
 
         for (int M = start; M < N; M++) {
             int decomSum = GetDecompositionSum(M);
@@ -29,7 +33,7 @@ public class Main {
             }
         }
         bw.write(Integer.toString(result));
-        
+
         br.close();
         bw.flush();
         bw.close();
