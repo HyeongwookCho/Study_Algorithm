@@ -11,24 +11,25 @@ public class Main {
         // 어떻게 M 을 찾을 수 있을까? 216 = M + M[0] + M[1] + M[2] 인데 그걸 찾을만한 근거가 부족하다.
         // 우리는 재빠른 연산이 가능한 컴퓨터를 사용하고 있고, 처음부터 순회하며 찾을 수 있는 능력이 있다!
 
-
-
         // 생성자가 없는 경우 : 1 ~ 9
         // 생성자가 여러 개 인 경우 : 91 과 100
 
-
-
         int N = Integer.parseInt(br.readLine());
-        int M = 0;
+        int result = 0;
 
-        for (int i = 0; i < N; i++) {
-            if (GetDecompositionSum(i) == N) {
-                M = i;
+        // 최적화된 시작점 찾기
+        // N의 자리수 * 9만큼 빼주는 것으로 안전한 출발점 결정하기 (사실 미미함 ^^)
+        int start = Math.max(N - 9 * String.valueOf(N).length(), 0); 
+
+        for (int M = start; M < N; M++) {
+            int decomSum = GetDecompositionSum(M);
+            if(decomSum == N){
+                result = M;
                 break;
             }
         }
-        bw.write(Integer.toString(M));
-
+        bw.write(Integer.toString(result));
+        
         br.close();
         bw.flush();
         bw.close();
